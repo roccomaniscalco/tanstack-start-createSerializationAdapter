@@ -36,23 +36,39 @@ function Index() {
         Calling any server function from the client entry point breaks custom
         serialization adapters in React Start
       </h1>
+      <h2 className="text-lg font-semibold mb-2">Expected behavior</h2>
+      <p className="mb-8">
+        Custom serialization adapters should work as expected, even if a server
+        function is called from the client entry point.
+      </p>
+      <h2 className="text-lg font-semibold mb-2">Actual behavior</h2>
+      <p className="mb-8">
+        If any server function is called from the client entry point, then
+        calling a server function that uses a custom serialization adapter will
+        throw a <code>SerovalDeserializationError</code>.
+      </p>
       <h2 className="text-lg font-semibold mb-2">Steps to reproduce</h2>
       <ol className="list-decimal list-inside mb-8">
         <li>Define custom serialization adapters</li>
         <li>Call any server function from the client entry point</li>
         <li>Call a server function that uses a custom serialization adapter</li>
+        <li>
+          A <code>SerovalDeserializationError</code> occurs
+        </li>
       </ol>
       <h2 className="text-lg font-semibold mb-2">Example</h2>
       <p className="mb-8">
-        <code>getAnimalFn</code> either returns an <code>Animal</code> instance
-        or throws a <code>NamedError</code>. Both results should be correctly
-        serialized and deserialized by their respective serialization adapters.
-        Instead, a deserialization error occurs. Click <GetAnimalButton /> to
-        call <code>getAnimalFn</code> and log the result.
+        <code>getAnimalFn</code> returns an <code>Animal</code> instance or
+        throws a <code>NamedError</code>. Both should be serialized/deserialized
+        by their respective serialization adapters, but instead a{" "}
+        deserialization error occurs. Click <GetAnimalButton /> to call{" "}
+        <code>getAnimalFn</code> and log the result. Comment out the call to{" "}
+        <code>getFooFn</code> in <code>client.tsx</code> to see the expected
+        behavior.
       </p>
       <h2 className="text-lg font-semibold mb-2">Project structure</h2>
 
-      <pre className="bg-gray-100 p-4 rounded overflow-x-auto">
+      <pre className="bg-gray-100 p-4 rounded overflow-x-auto text-sm">
         {PROJECT_STRUCTURE}
       </pre>
     </div>
@@ -67,7 +83,7 @@ function GetAnimalButton() {
       onClick={() => {
         /**
          * 3. Call a server function that uses a custom serialization adapter
-         */ 
+         */
         getAnimal()
           .then((animal) => console.log("animal", animal))
           .catch((error) => console.error("error", error));
