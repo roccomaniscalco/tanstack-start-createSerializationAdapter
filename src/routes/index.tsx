@@ -23,7 +23,7 @@ const PROJECT_STRUCTURE = `./src
 ├── router.tsx
 ├── routes
 │   ├── __root.tsx
-│   └── index.tsx      # Reproduction entry point
+│   └── index.tsx      # Index page – Reproduction example
 ├── routeTree.gen.ts
 ├── start.ts           # Start instance – Registers serialization adapters
 └── styles.css
